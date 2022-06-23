@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{home/layout_detail}">
+<head>
+<title>Welcome to my Spring Boot Project</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+	<!-- Fragment-->
+	<div layout:fragment="detail">
+
+		<!-- Form -->
+		<form
+			th:action="@{/employee/items/course/insertCourse(id=${employee.id})}"
+			method="post">
+			
+			<!-- Right Column Course to Employee -->
+			<div class="w3-col m8">
+				<!-- Select Course to Employee by Id  -->
+				<div class="w3-card-4" th:object="${course}">
+					<header class="w3-container w3-light-grey">
+						<h3>+ Add Course</h3>
+					</header>
+					<div class="w3-container">
+						<p>Select course</p>
+						<p></p>
+						<hr>
+						<div class="w3-dropdown-hover w3-center">
+							<select class="w3-button w3-blue" id="selectCourse"
+								name="idCourse">
+
+								<option th:value="0">No course</option>
+								<option th:each="course : ${coursesfromController}"
+									th:value="${course.id}"
+									th:text="${course.certificate.name} +
+											' '+ ${course.certificate.hours} +' hours'  + 
+											'  '+${course.teacher}+
+											' - Room: '+ ${course.room} +
+											' - Fee:  '+ ${course.fee} + ' €'+
+											'  Dates: [' +${#dates.format(course.initDate, 'dd-MM-yyyy')}+
+											'-'  +${#dates.format(course.finishDate, 'dd-MM-yyyy')} + '] '">
+								</option>
+							</select>
+						</div>
+						<br>
+						<hr>
+						<div th:if="${message}"
+							class="w3-panel w3-pale-green w3-center w3-display-container">
+							<span onclick="this.parentElement.style.display='none'"
+								class="w3-button w3-pale-green w3-large w3-display-topright">x</span>
+							<p th:text="${message}"></p>
+						</div>
+
+
+					</div>
+					<button type="submit" class="w3-button w3-block w3-gray w3-center">+
+						Add</button>
+
+				</div>
+				<br>
+			</div>
+			<!-- End Right Column -->
+
+		</form>
+		<!-- End Form -->
+
+	</div>
+	<!-- End Fragment-->
+
+</body>
+</html>
